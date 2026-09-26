@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fragrance IQ Collections | Inventory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #120f12;
+      --bg-2: #1a1719;
+      --bg-3: #221d1f;
+      --panel: rgba(29, 24, 26, 0.82);
+      --panel-strong: rgba(39, 31, 34, 0.92);
+      --panel-soft: rgba(50, 42, 44, 0.66);
+      --card: rgba(23, 19, 20, 0.9);
+      --line: rgba(212, 179, 120, 0.22);
+      --line-soft: rgba(255,255,255,0.08);
+      --text: #f7f1ea;
+      --text-soft: #d0bda6;
+      --text-dim: #9e8d7e;
+      --gold: #d8b77c;
+      --gold-strong: #ba9759;
+      --gold-soft: rgba(216, 183, 124, 0.18);
+      --rose: #c87c7c;
+      --rose-soft: rgba(200, 124, 124, 0.15);
+      --green: #7ab38a;
+      --green-soft: rgba(122, 179, 138, 0.18);
+      --red: #d77d6c;
+      --red-soft: rgba(215, 125, 108, 0.15);
+      --shadow: 0 28px 50px rgba(0,0,0,0.34);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      width: 100%;
+      max-width: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(216,183,124,0.1), transparent 20%),
+        radial-gradient(circle at bottom right, rgba(200,124,124,0.08), transparent 20%),
+        linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+      color: var(--text);
+      font-family: "Inter", "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      display: block;
+      justify-content: unset;
+      padding: 18px 10px 22px;
+      min-width: 320px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      background: rgba(17, 13, 15, 0.82);
+      border: 1px solid rgba(216,183,124,0.17);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 14px 10px 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    input, select, button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    select, input, textarea {
+      color-scheme: dark;
+    }
+
+    .topbar, .stats-row, .dashboard-grid, .footer-note {
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      padding: 8px 4px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-badge {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(216,183,124,0.25), rgba(186,151,89,0.72));
+      color: #fffaf4;
+      border: 1px solid rgba(216,183,124,0.36);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 14px 26px rgba(0,0,0,0.25);
+      font-size: 1.4rem;
+    }
+
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.1rem, 4vw, 3.3rem);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      font-weight: 600;
+      color: #f9f1e7;
+    }
+
+    .brand-title small {
+      color: var(--text-soft);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(216,183,124,0.08);
+      border: 1px solid rgba(216,183,124,0.2);
+      color: var(--text);
+      letter-spacing: 0.04em;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 118px;
+      background: linear-gradient(180deg, rgba(40,34,36,0.99), rgba(24,20,22,0.88));
+      border: 1px solid rgba(216,183,124,0.1);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(216,183,124,0.22), rgba(216,183,124,0.08));
+      border: 1px solid rgba(216,183,124,0.2);
+      color: var(--gold);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .stat-content {
+      min-width: 0;
+    }
+
+    .stat-content h3 {
+      color: var(--text-dim);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .stat-content .value {
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(26,22,22,0.88), rgba(18,15,17,0.92));
+      border: 1px solid rgba(216,183,124,0.12);
+      border-radius: 28px;
+      padding: 18px 18px 16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(216,183,124,0.18);
+    }
+
+    .panel-header h2 {
+      color: #f7efe5;
+      font-size: 1.2rem;
+      letter-spacing: 0.01em;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field-group { display: grid; gap: 8px; }
+
+    .field-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    input, select {
+      width: 100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(216,183,124,0.17);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 10px 38px 10px 14px;
+      font-size: 0.96rem;
+      outline: none;
+      transition: 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+        linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(50% - 2px),
+        calc(100% - 12px) calc(50% - 2px);
+      background-size: 6px 6px;
+      background-repeat: no-repeat;
+    }
+
+    select option {
+      background: #1a1719;
+      color: #f7f1ea;
+    }
+
+    select:focus {
+      border-color: rgba(216,183,124,0.5);
+      box-shadow: 0 0 0 3px rgba(216,183,124,0.12);
+      background-color: rgba(255,255,255,0.04);
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 48px;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d8b77c 0%, #b88f51 100%);
+      color: #1d1715;
+      box-shadow: 0 12px 25px rgba(216,183,124,0.2);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, rgba(216,183,124,0.2), rgba(216,183,124,0.06));
+      border: 1px solid rgba(216,183,124,0.2);
+      color: var(--text);
+    }
+
+    .quick-sell-box {
+      margin-top: 18px;
+      padding: 16px 14px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(216,183,124,0.12);
+      background: linear-gradient(180deg, rgba(216,183,124,0.05), rgba(255,255,255,0.02));
+    }
+
+    .quick-sell-box h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f7efe5;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .quick-sell-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.75fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .quick-sell-grid .btn {
+      width: auto;
+      min-width: 110px;
+    }
+
+    .sale-preview {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(122,179,138,0.12);
+      border: 1px solid rgba(122,179,138,0.2);
+      color: #a8d3af;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .helper-text {
+      margin-top: 8px;
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .inventory-panel {
+      min-width: 0;
+    }
+
+    .table-shell {
+      overflow: auto;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(216,183,124,0.08);
+      border-radius: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    thead th {
+      background: rgba(216,183,124,0.06);
+      color: var(--text-soft);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 13px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      border-bottom: 1px solid rgba(216,183,124,0.1);
+    }
+
+    tbody td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(216,183,124,0.08);
+      color: var(--text);
+      vertical-align: middle;
+      background: rgba(255,255,255,0.01);
+    }
+
+    tbody tr:hover td {
+      background: rgba(216,183,124,0.03);
+    }
+
+    .product-name {
+      font-weight: 700;
+      color: #fffaf3;
+      letter-spacing: 0.01em;
+    }
+
+    .muted {
+      color: var(--text-soft);
+      font-size: 0.8rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-soft {
+      background: rgba(216,183,124,0.08);
+      color: var(--gold);
+      border-color: rgba(216,183,124,0.14);
+    }
+
+    .badge-success {
+      background: rgba(122,179,138,0.12);
+      color: #a3d9b0;
+      border-color: rgba(122,179,138,0.18);
+    }
+
+    .badge-warning {
+      background: rgba(216,183,124,0.08);
+      color: #ebc87d;
+      border-color: rgba(216,183,124,0.12);
+    }
+
+    .badge-danger {
+      background: rgba(215,125,108,0.08);
+      color: #f5ab9d;
+      border-color: rgba(215,125,108,0.12);
+    }
+
+    .price {
+      font-weight: 700;
+      color: #f8f4ef;
+    }
+
+    .sell-input {
+      width: 68px;
+      height: 38px;
+      border-radius: 12px;
+      text-align: center;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(216,183,124,0.16);
+      color: var(--text);
+      padding: 6px 8px;
+      font-weight: 600;
+    }
+
+    .sell-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .action-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(216,183,124,0.12);
+      color: var(--text-soft);
+      transition: 0.18s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(216,183,124,0.12);
+      color: var(--text);
+    }
+
+    .icon-btn.sell:hover {
+      background: rgba(122,179,138,0.14);
+      color: #b9e0bf;
+      border-color: rgba(122,179,138,0.2);
+    }
+
+    .icon-btn.delete:hover {
+      background: rgba(215,125,108,0.12);
+      color: #f0afa2;
+      border-color: rgba(215,125,108,0.2);
+    }
+
+    .icon-btn:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    .empty-state {
+      padding: 52px 18px 42px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: 18px;
+    }
+
+    .log-panel { grid-column: 1 / -1; margin-top: 10px; }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-soft);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .filter-wrap select {
+      width: auto;
+      min-width: 170px;
+      height: 38px;
+      padding-inline: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border: 1px solid rgba(216,183,124,0.16);
+    }
+
+    .log-table-shell {
+      max-height: 300px;
+      overflow: auto;
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(216,183,124,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .log-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(216,183,124,0.1);
+      font-weight: 600;
+      color: #f7efe5;
+    }
+
+    .footer-note {
+      padding-top: 12px;
+      text-align: right;
+      color: var(--text-dim);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1000px) {
+      .stats-row { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 18px 12px 26px;
+      }
+
+      .app-shell {
+        border-radius: 24px;
+        padding: 18px 14px 12px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding-bottom: 16px;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .field-two, .quick-sell-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-sell-grid .btn {
+        width: 100%;
+      }
+
+      .header-pill {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        min-height: 44px;
+        font-size: 0.8rem;
+      }
+
+      input, select {
+        height: 42px;
+        font-size: 0.95rem;
+      }
+
+      .panel-header h2 {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">
+          <i class="fas fa-spray-can"></i>
+        </div>
+        <div class="brand-title">
+          <h1>Fragrance IQ Collections</h1>
+          <small>Curated Collection</small>
+        </div>
+      </div>
+
+      <div class="header-pill">
+        <i class="fas fa-bolt"></i>
+        Collection Inventory
+      </div>
+    </header>
+
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+        <div class="stat-content">
+          <h3>Total Stock</h3>
+          <div class="value" id="totalStockDisplay">0</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-tag"></i></div>
+        <div class="stat-content">
+          <h3>Fragrances</h3>
+          <div class="value" id="totalTypesDisplay">0</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="stat-content">
+          <h3>Total Sold</h3>
+          <div class="value" id="totalSoldDisplay">0</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-coins"></i></div>
+        <div class="stat-content">
+          <h3>Revenue</h3>
+          <div class="value" id="totalRevenueDisplay">$0.00</div>
+        </div>
+      </div>
+    </section>
+
+    <main class="dashboard-grid">
+      <section class="panel">
+        <div class="panel-header">
+          <h2><i class="fas fa-plus-circle"></i> Add new stock</h2>
+        </div>
+
+        <form id="addStockForm" class="form-grid">
+          <div class="field-group">
+            <label for="perfumeName">Fragrance name</label>
+            <input id="perfumeName" type="text" placeholder="e.g. Velvet Rose" required autocomplete="off" />
+          </div>
+
+          <div class="field-two">
+            <div class="field-group">
+              <label for="perfumeBrand">Brand</label>
+              <input id="perfumeBrand" type="text" placeholder="e.g. Maison Lumière" required autocomplete="off" />
+            </div>
+
+            <div class="field-group">
+              <label for="perfumeVolume">Volume (ml)</label>
+              <input id="perfumeVolume" type="number" min="1" value="50" required />
+            </div>
+          </div>
+
+          <div class="field-two">
+            <div class="field-group">
+              <label for="perfumePrice">Price ($)</label>
+              <input id="perfumePrice" type="number" step="0.01" min="0.01" placeholder="89.99" required />
+            </div>
+
+            <div class="field-group">
+              <label for="perfumeQuantity">Quantity</label>
+              <input id="perfumeQuantity" type="number" min="1" value="1" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add to inventory
+          </button>
+        </form>
+
+        <div class="quick-sell-box">
+          <h3><i class="fas fa-cash-register"></i> Quick sale</h3>
+
+          <div class="quick-sell-grid">
+            <div class="field-group">
+              <label for="quickSellPerfume">Fragrance</label>
+              <select id="quickSellPerfume">
+                <option value="">— Select fragrance —</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="quickSellQty">Qty</label>
+              <input id="quickSellQty" type="number" min="1" value="1" step="1" />
+            </div>
+
+            <button type="button" id="quickSellBtn" class="btn btn-secondary">
+              <i class="fas fa-check"></i> Sell
+            </button>
+          </div>
+
+          <div id="quickSellPreview" class="sale-preview" style="display:none;">
+            <i class="fas fa-receipt"></i> Total: <strong id="quickSellTotal">$0.00</strong>
+          </div>
+
+          <div id="quickSellStockInfo" class="helper-text">
+            Select a fragrance to view stock and price.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel inventory-panel">
+        <div class="panel-header">
+          <h2><i class="fas fa-list-ul"></i> Collection inventory</h2>
+        </div>
+
+        <div class="table-shell">
+          <table id="inventoryTable">
+            <thead>
+              <tr>
+                <th>Fragrance</th>
+                <th>Brand</th>
+                <th>Vol</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Sold</th>
+                <th>Sale qty</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+
+          <div id="emptyInventoryMsg" class="empty-state">
+            <i class="fas fa-flask" style="margin-right:8px;"></i> No fragrances yet. Add your first bottle.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel log-panel">
+        <div class="log-header">
+          <div class="panel-header" style="margin:0; padding:0; border:none;">
+            <h2><i class="fas fa-exchange-alt"></i> Movement log</h2>
+          </div>
+
+          <div class="filter-wrap">
+            <label for="logFilter">Filter:</label>
+            <select id="logFilter">
+              <option value="all">All movements</option>
+              <option value="in">Stock In</option>
+              <option value="out">Stock Out</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="log-table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Fragrance</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="logTableBody"></tbody>
+          </table>
+
+          <div id="emptyLogMsg" class="empty-state" style="display:none;">
+            <i class="fas fa-history" style="margin-right:8px;"></i> No stock movement recorded yet.
+          </div>
+        </div>
+
+        <div class="log-foot">
+          <span><i class="fas fa-calculator"></i> Sales revenue:</span>
+          <span id="logRevenueTotal">$0.00</span>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer-note">
+      <i class="fas fa-sync-alt"></i> Boutique edition
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      let perfumes = [];
+      let stockMovements = [];
+
+      const formatCurrency = (amount) => new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2
+      }).format(Number(amount || 0));
+
+      const formatTime = (date) => new Intl.DateTimeFormat("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }).format(new Date(date));
+
+      const tbody = document.getElementById("tableBody");
+      const emptyInventoryMsg = document.getElementById("emptyInventoryMsg");
+      const totalStockDisplay = document.getElementById("totalStockDisplay");
+      const totalTypesDisplay = document.getElementById("totalTypesDisplay");
+      const totalSoldDisplay = document.getElementById("totalSoldDisplay");
+      const totalRevenueDisplay = document.getElementById("totalRevenueDisplay");
+      const addForm = document.getElementById("addStockForm");
+
+      const logTableBody = document.getElementById("logTableBody");
+      const emptyLogMsg = document.getElementById("emptyLogMsg");
+      const logFilter = document.getElementById("logFilter");
+      const logRevenueTotal = document.getElementById("logRevenueTotal");
+
+      const quickSellPerfume = document.getElementById("quickSellPerfume");
+      const quickSellQty = document.getElementById("quickSellQty");
+      const quickSellBtn = document.getElementById("quickSellBtn");
+      const quickSellPreview = document.getElementById("quickSellPreview");
+      const quickSellTotal = document.getElementById("quickSellTotal");
+      const quickSellStockInfo = document.getElementById("quickSellStockInfo");
+      const nameInput = document.getElementById("perfumeName");
+      const brandInput = document.getElementById("perfumeBrand");
+      const volumeInput = document.getElementById("perfumeVolume");
+      const priceInput = document.getElementById("perfumePrice");
+      const quantityInput = document.getElementById("perfumeQuantity");
+
+      function escapeHtml(value) {
+        if (!value && value !== 0) return "";
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function renderStats() {
+        const totalStock = perfumes.reduce((sum, p) => sum + p.stock, 0);
+        const totalTypes = perfumes.length;
+        const totalSold = perfumes.reduce((sum, p) => sum + p.sold, 0);
+        const totalRevenue = perfumes.reduce((sum, p) => sum + (p.sold * p.price), 0);
+
+        totalStockDisplay.textContent = totalStock;
+        totalTypesDisplay.textContent = totalTypes;
+        totalSoldDisplay.textContent = totalSold;
+        totalRevenueDisplay.textContent = formatCurrency(totalRevenue);
+      }
+
+      function renderTable() {
+        if (perfumes.length === 0) {
+          tbody.innerHTML = "";
+          emptyInventoryMsg.style.display = "block";
+          return;
+        }
+
+        emptyInventoryMsg.style.display = "none";
+
+        tbody.innerHTML = perfumes.map((perfume, index) => {
+          let stockBadge = '<span class="badge badge-success">In stock</span>';
+          if (perfume.stock === 0) {
+            stockBadge = '<span class="badge badge-warning">Out</span>';
+          } else if (perfume.stock <= 5) {
+            stockBadge = '<span class="badge badge-soft">Low</span>';
+          }
+
+          const sellQty = Math.max(1, perfume.stock || 1);
+          const qtyInput = `
+            <input
+              type="number"
+              class="sell-input"
+              id="sellQty_${index}"
+              value="1"
+              min="1"
+              max="${sellQty}"
+              step="1"
+              ${perfume.stock < 1 ? "disabled" : ""}
+              data-index="${index}"
+            />
+          `;
+
+          return `
+            <tr>
+              <td><span class="product-name">${escapeHtml(perfume.name)}</span></td>
+              <td>${escapeHtml(perfume.brand)}</td>
+              <td>${perfume.volume}ml</td>
+              <td class="price">${formatCurrency(perfume.price)}</td>
+              <td>${stockBadge}</td>
+              <td><span class="badge badge-success">${perfume.sold}</span></td>
+              <td>${qtyInput}</td>
+              <td>
+                <div class="action-group">
+                  <button class="icon-btn sell" data-action="sell" data-index="${index}" title="Sell" ${perfume.stock < 1 ? "disabled" : ""}>
+                    <i class="fas fa-cart-plus"></i>
+                  </button>
+                  <button class="icon-btn delete" data-action="delete" data-index="${index}" title="Delete">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function renderQuickSell() {
+        const currentValue = quickSellPerfume.value;
+        const options = perfumes.map((p, idx) => {
+          const disabled = p.stock < 1 ? "disabled" : "";
+          return `<option value="${idx}" ${disabled}>${escapeHtml(p.name)} (${escapeHtml(p.brand)}) — ${p.stock} in stock</option>`;
+        }).join("");
+
+        quickSellPerfume.innerHTML = `<option value="">— Select fragrance —</option>${options}`;
+
+        if (currentValue && perfumes[currentValue] && perfumes[currentValue].stock > 0) {
+          quickSellPerfume.value = currentValue;
+        } else {
+          quickSellPerfume.value = "";
+        }
+
+        updateQuickSellPreview();
+      }
+
+      function updateQuickSellPreview() {
+        const idx = quickSellPerfume.value;
+        const qty = parseInt(quickSellQty.value, 10) || 1;
+
+        if (idx === "") {
+          quickSellPreview.style.display = "none";
+          quickSellStockInfo.textContent = "Select a fragrance to view stock and price.";
+          return;
+        }
+
+        const perfume = perfumes[idx];
+        if (!perfume) {
+          quickSellPreview.style.display = "none";
+          quickSellStockInfo.textContent = "Perfume not found.";
+          return;
+        }
+
+        const maxQty = Math.max(1, perfume.stock);
+        const safeQty = Math.min(Math.max(qty, 1), maxQty);
+
+        if (safeQty !== qty) {
+          quickSellQty.value = safeQty;
+        }
+
+        quickSellStockInfo.textContent = `Available stock: ${perfume.stock} unit(s) · Price: ${formatCurrency(perfume.price)} each`;
+        quickSellTotal.textContent = formatCurrency(safeQty * perfume.price);
+        quickSellPreview.style.display = "inline-flex";
+      }
+
+      function renderLog() {
+        const filter = logFilter.value;
+        let filtered = [...stockMovements];
+
+        if (filter === "in") {
+          filtered = filtered.filter(item => item.type === "in");
+        } else if (filter === "out") {
+          filtered = filtered.filter(item => item.type === "out");
+        }
+
+        filtered.sort((a, b) => b.timestamp - a.timestamp);
+
+        if (filtered.length === 0) {
+          logTableBody.innerHTML = "";
+          emptyLogMsg.style.display = "block";
+          logRevenueTotal.textContent = formatCurrency(0);
+          return;
+        }
+
+        emptyLogMsg.style.display = "none";
+
+        logTableBody.innerHTML = filtered.map(item => {
+          const typeBadge = item.type === "in"
+            ? '<span class="badge badge-success">Stock In</span>'
+            : '<span class="badge badge-danger">Stock Out</span>';
+
+          return `
+            <tr>
+              <td class="muted">${formatTime(item.timestamp)}</td>
+              <td>${typeBadge}</td>
+              <td>${escapeHtml(item.perfumeName)} <span class="muted">(${escapeHtml(item.brand)})</span></td>
+              <td>${item.quantity}</td>
+              <td>${formatCurrency(item.unitPrice)}</td>
+              <td>${formatCurrency(item.total)}</td>
+            </tr>
+          `;
+        }).join("");
+
+        const totalSalesRevenue = stockMovements
+          .filter(item => item.type === "out")
+          .reduce((sum, item) => sum + Number(item.total || 0), 0);
+
+        logRevenueTotal.textContent = formatCurrency(totalSalesRevenue);
+      }
+
+      function refreshUI() {
+        renderStats();
+        renderTable();
+        renderLog();
+        renderQuickSell();
+      }
+
+      function addPerfume(event) {
+        event.preventDefault();
+
+        const name = nameInput.value.trim();
+        const brand = brandInput.value.trim();
+        const volume = Number(volumeInput.value);
+        const price = Number(priceInput.value);
+        const quantity = parseInt(quantityInput.value, 10);
+
+        if (!name || !brand) {
+          alert("Please enter both fragrance name and brand.");
+          return;
+        }
+
+        if (!Number.isFinite(volume) || volume <= 0) {
+          alert("Please enter a valid volume.");
+          return;
+        }
+
+        if (!Number.isFinite(price) || price <= 0) {
+          alert("Please enter a valid price.");
+          return;
+        }
+
+        if (!Number.isInteger(quantity) || quantity < 1) {
+          alert("Quantity must be at least 1.");
+          return;
+        }
+
+        const existingIndex = perfumes.findIndex(item =>
+          item.name.toLowerCase() === name.toLowerCase() &&
+          item.brand.toLowerCase() === brand.toLowerCase() &&
+          Number(item.volume) === volume
+        );
+
+        if (existingIndex !== -1) {
+          perfumes[existingIndex].stock += quantity;
+          stockMovements.push({
+            id: Date.now() + Math.random(),
+            timestamp: Date.now(),
+            type: "in",
+            perfumeName: perfumes[existingIndex].name,
+            brand: perfumes[existingIndex].brand,
+            quantity,
+            unitPrice: perfumes[existingIndex].price,
+            total: quantity * perfumes[existingIndex].price
+          });
+        } else {
+          const newPerfume = {
+            id: Date.now() + Math.random(),
+            name,
+            brand,
+            volume,
+            price,
+            stock: quantity,
+            sold: 0
+          };
+
+          perfumes.push(newPerfume);
+
+          stockMovements.push({
+            id: Date.now() + Math.random(),
+            timestamp: Date.now(),
+            type: "in",
+            perfumeName: name,
+            brand,
+            quantity,
+            unitPrice: price,
+            total: quantity * price
+          });
+        }
+
+        addForm.reset();
+        volumeInput.value = 50;
+        quantityInput.value = 1;
+        nameInput.focus();
+        refreshUI();
+      }
+
+      function sellPerfume(index, qty) {
+        const perfume = perfumes[index];
+        if (!perfume) return;
+
+        const sellQty = Number.parseInt(qty, 10);
+
+        if (!Number.isInteger(sellQty) || sellQty < 1) {
+          alert("Please enter a valid quantity.");
+          return;
+        }
+
+        if (perfume.stock < sellQty) {
+          alert(`Not enough stock for "${perfume.name}". Available: ${perfume.stock}, requested: ${sellQty}.`);
+          return;
+        }
+
+        perfume.stock -= sellQty;
+        perfume.sold += sellQty;
+
+        stockMovements.push({
+          id: Date.now() + Math.random(),
+          timestamp: Date.now(),
+          type: "out",
+          perfumeName: perfume.name,
+          brand: perfume.brand,
+          quantity: sellQty,
+          unitPrice: perfume.price,
+          total: sellQty * perfume.price
+        });
+
+        refreshUI();
+      }
+
+      function deletePerfume(index) {
+        const perfume = perfumes[index];
+        if (!perfume) return;
+
+        const proceed = confirm(`Remove "${perfume.name}" (${perfume.brand}) from inventory? The movement log will remain, but this item will be removed from the main collection inventory.`);
+        if (!proceed) return;
+
+        perfumes.splice(index, 1);
+        refreshUI();
+      }
+
+      tbody.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+
+        const action = button.dataset.action;
+        const index = Number(button.dataset.index);
+
+        if (action === "sell") {
+          const qtyInput = document.getElementById(`sellQty_${index}`);
+          const qty = qtyInput ? qtyInput.value : 1;
+          sellPerfume(index, qty);
+        }
+
+        if (action === "delete") {
+          deletePerfume(index);
+        }
+      });
+
+      quickSellPerfume.addEventListener("change", updateQuickSellPreview);
+      quickSellQty.addEventListener("input", updateQuickSellPreview);
+
+      quickSellBtn.addEventListener("click", () => {
+        const index = quickSellPerfume.value;
+        if (index === "") {
+          alert("Please select a fragrance to sell.");
+          return;
+        }
+
+        sellPerfume(Number(index), quickSellQty.value);
+        quickSellQty.value = 1;
+        updateQuickSellPreview();
+      });
+
+      logFilter.addEventListener("change", renderLog);
+      addForm.addEventListener("submit", addPerfume);
+
+      function seedDemoData() {
+        if (perfumes.length !== 0) return;
+
+        perfumes.push(
+          { id: 1, name: "Velvet Rose", brand: "Maison Lumière", volume: 50, price: 89.99, stock: 12, sold: 5 },
+          { id: 2, name: "Oud Intense", brand: "Arabian Nights", volume: 75, price: 145.50, stock: 7, sold: 9 },
+          { id: 3, name: "Citrus Breeze", brand: "Aqua di Sole", volume: 100, price: 65.00, stock: 0, sold: 22 },
+          { id: 4, name: "Vanilla Bourbon", brand: "Gourmand Co.", volume: 30, price: 72.25, stock: 8, sold: 3 }
+        );
+
+        const now = Date.now();
+
+        stockMovements.push(
+          { id: 101, timestamp: now - 86400000 * 3, type: "in", perfumeName: "Velvet Rose", brand: "Maison Lumière", quantity: 20, unitPrice: 89.99, total: 20 * 89.99 },
+          { id: 102, timestamp: now - 86400000 * 2, type: "in", perfumeName: "Oud Intense", brand: "Arabian Nights", quantity: 15, unitPrice: 145.50, total: 15 * 145.50 },
+          { id: 103, timestamp: now - 86400000 * 2, type: "in", perfumeName: "Citrus Breeze", brand: "Aqua di Sole", quantity: 30, unitPrice: 65.00, total: 30 * 65.00 },
+          { id: 104, timestamp: now - 86400000 * 1, type: "in", perfumeName: "Vanilla Bourbon", brand: "Gourmand Co.", quantity: 12, unitPrice: 72.25, total: 12 * 72.25 },
+          { id: 105, timestamp: now - 86400000 * 0.5, type: "in", perfumeName: "Velvet Rose", brand: "Maison Lumière", quantity: 5, unitPrice: 89.99, total: 5 * 89.99 },
+          { id: 201, timestamp: now - 3600000 * 5, type: "out", perfumeName: "Velvet Rose", brand: "Maison Lumière", quantity: 2, unitPrice: 89.99, total: 2 * 89.99 },
+          { id: 202, timestamp: now - 3600000 * 4, type: "out", perfumeName: "Oud Intense", brand: "Arabian Nights", quantity: 3, unitPrice: 145.50, total: 3 * 145.50 },
+          { id: 203, timestamp: now - 3600000 * 3, type: "out", perfumeName: "Citrus Breeze", brand: "Aqua di Sole", quantity: 1, unitPrice: 65.00, total: 65.00 },
+          { id: 204, timestamp: now - 3600000 * 2, type: "out", perfumeName: "Vanilla Bourbon", brand: "Gourmand Co.", quantity: 1, unitPrice: 72.25, total: 72.25 },
+          { id: 205, timestamp: now - 3600000 * 1, type: "out", perfumeName: "Velvet Rose", brand: "Maison Lumière", quantity: 3, unitPrice: 89.99, total: 3 * 89.99 },
+          { id: 206, timestamp: now - 1800000, type: "out", perfumeName: "Oud Intense", brand: "Arabian Nights", quantity: 6, unitPrice: 145.50, total: 6 * 145.50 }
+        );
+      }
+
+      seedDemoData();
+      refreshUI();
+    })();
+  </script>
+</body>
+</html>
