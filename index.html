@@ -157,7 +157,7 @@
 
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
       gap: 16px;
       margin-bottom: 22px;
     }
@@ -212,7 +212,7 @@
 
     .dashboard-grid {
       display: grid;
-      grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
       gap: 22px;
       align-items: start;
     }
@@ -272,15 +272,25 @@
       height: 46px;
       border-radius: 14px;
       border: 1px solid rgba(216,183,124,0.17);
-      background: rgba(255,255,255,0.03);
+      background-color: rgba(255,255,255,0.03);
       color: var(--text);
-      padding: 10px 38px 10px 14px;
+      padding: 10px 14px;
       font-size: 0.96rem;
       outline: none;
       transition: 0.2s ease;
+    }
+
+    input:focus {
+      border-color: rgba(216,183,124,0.5);
+      box-shadow: 0 0 0 3px rgba(216,183,124,0.12);
+      background-color: rgba(255,255,255,0.04);
+    }
+
+    select {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
+      padding-right: 38px;
       background-image:
         linear-gradient(45deg, transparent 50%, var(--gold) 50%),
         linear-gradient(135deg, var(--gold) 50%, transparent 50%);
@@ -388,6 +398,7 @@
 
     .table-shell {
       overflow: auto;
+      -webkit-overflow-scrolling: touch;
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(216,183,124,0.08);
       border-radius: 18px;
@@ -396,6 +407,9 @@
     table {
       width: 100%;
       border-collapse: collapse;
+    }
+
+    table.responsive-table {
       min-width: 760px;
     }
 
@@ -583,6 +597,7 @@
     .log-table-shell {
       max-height: 300px;
       overflow: auto;
+      -webkit-overflow-scrolling: touch;
       margin-top: 12px;
       border-radius: 18px;
       border: 1px solid rgba(216,183,124,0.08);
@@ -611,29 +626,76 @@
     }
 
     @media (max-width: 1000px) {
-      .stats-row { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
       .dashboard-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
       body {
-        padding: 18px 12px 26px;
+        padding:
+          max(10px, env(safe-area-inset-top, 0px))
+          max(8px, env(safe-area-inset-right, 0px))
+          max(16px, env(safe-area-inset-bottom, 0px))
+          max(8px, env(safe-area-inset-left, 0px));
       }
 
       .app-shell {
-        border-radius: 24px;
-        padding: 18px 14px 12px;
+        border-radius: 18px;
+        padding: 12px 10px 10px;
       }
 
       .topbar {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 12px;
-        padding-bottom: 16px;
+        padding-bottom: 14px;
       }
 
-      .stats-row {
-        grid-template-columns: 1fr;
+      .brand {
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .brand-badge {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        font-size: 1.15rem;
+      }
+
+      .brand-title {
+        min-width: 0;
+      }
+
+      .brand-title h1 {
+        font-size: clamp(1.65rem, 7vw, 2.2rem);
+        overflow-wrap: anywhere;
+      }
+
+      .header-pill {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.72rem;
+        padding: 10px 12px;
+      }
+
+      .stat-card {
+        min-height: 96px;
+        padding: 14px;
+      }
+
+      .stat-icon {
+        width: 44px;
+        height: 44px;
+      }
+
+      .stat-content .value {
+        white-space: normal;
+        font-size: 1.45rem;
+      }
+
+      .panel {
+        border-radius: 20px;
+        padding: 14px 12px 12px;
       }
 
       .field-two, .quick-sell-grid {
@@ -642,11 +704,121 @@
 
       .quick-sell-grid .btn {
         width: 100%;
+        min-width: 0;
       }
 
-      .header-pill {
+      .log-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-wrap {
         width: 100%;
-        justify-content: center;
+        justify-content: space-between;
+      }
+
+      .filter-wrap select {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .log-foot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .footer-note {
+        text-align: center;
+      }
+
+      .table-shell,
+      .log-table-shell {
+        overflow: visible;
+        max-height: none;
+        border: none;
+        background: transparent;
+      }
+
+      table.responsive-table {
+        min-width: 0;
+      }
+
+      table.responsive-table thead {
+        display: none;
+      }
+
+      table.responsive-table tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        padding: 4px 14px 10px;
+        border-radius: 16px;
+        border: 1px solid rgba(216,183,124,0.12);
+        background: linear-gradient(180deg, rgba(40,34,36,0.55), rgba(24,20,22,0.72));
+      }
+
+      table.responsive-table tbody tr:hover td {
+        background: transparent;
+      }
+
+      table.responsive-table tbody td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(216,183,124,0.08);
+        text-align: right;
+      }
+
+      table.responsive-table tbody td::before {
+        content: attr(data-label);
+        flex: 0 0 auto;
+        max-width: 42%;
+        color: var(--text-dim);
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-align: left;
+        line-height: 1.35;
+      }
+
+      table.responsive-table tbody td.cell-primary {
+        display: block;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        border-bottom: 1px solid rgba(216,183,124,0.14);
+      }
+
+      table.responsive-table tbody td.cell-primary::before {
+        display: none;
+      }
+
+      table.responsive-table tbody td.cell-actions {
+        justify-content: flex-end;
+        border-bottom: none;
+        padding-top: 4px;
+      }
+
+      table.responsive-table tbody td.cell-actions::before {
+        display: none;
+      }
+
+      table.responsive-table tbody td.cell-wrap {
+        flex-wrap: wrap;
+      }
+
+      .icon-btn {
+        width: 44px;
+        height: 44px;
+      }
+
+      .sell-input {
+        width: 76px;
+        height: 42px;
       }
     }
 
@@ -657,8 +829,8 @@
       }
 
       input, select {
-        height: 42px;
-        font-size: 0.95rem;
+        height: 44px;
+        font-size: 16px;
       }
 
       .panel-header h2 {
@@ -798,7 +970,7 @@
         </div>
 
         <div class="table-shell">
-          <table id="inventoryTable">
+          <table id="inventoryTable" class="responsive-table">
             <thead>
               <tr>
                 <th>Fragrance</th>
@@ -837,7 +1009,7 @@
         </div>
 
         <div class="log-table-shell">
-          <table>
+          <table id="logTable" class="responsive-table">
             <thead>
               <tr>
                 <th>Time</th>
@@ -969,14 +1141,14 @@
 
           return `
             <tr>
-              <td><span class="product-name">${escapeHtml(perfume.name)}</span></td>
-              <td>${escapeHtml(perfume.brand)}</td>
-              <td>${perfume.volume}ml</td>
-              <td class="price">${formatCurrency(perfume.price)}</td>
-              <td>${stockBadge}</td>
-              <td><span class="badge badge-success">${perfume.sold}</span></td>
-              <td>${qtyInput}</td>
-              <td>
+              <td class="cell-primary" data-label="Fragrance"><span class="product-name">${escapeHtml(perfume.name)}</span></td>
+              <td data-label="Brand">${escapeHtml(perfume.brand)}</td>
+              <td data-label="Volume">${perfume.volume}ml</td>
+              <td class="price" data-label="Price">${formatCurrency(perfume.price)}</td>
+              <td data-label="Stock">${stockBadge}</td>
+              <td data-label="Sold"><span class="badge badge-success">${perfume.sold}</span></td>
+              <td data-label="Sale qty">${qtyInput}</td>
+              <td class="cell-actions" data-label="Actions">
                 <div class="action-group">
                   <button class="icon-btn sell" data-action="sell" data-index="${index}" title="Sell" ${perfume.stock < 1 ? "disabled" : ""}>
                     <i class="fas fa-cart-plus"></i>
@@ -1066,12 +1238,12 @@
 
           return `
             <tr>
-              <td class="muted">${formatTime(item.timestamp)}</td>
-              <td>${typeBadge}</td>
-              <td>${escapeHtml(item.perfumeName)} <span class="muted">(${escapeHtml(item.brand)})</span></td>
-              <td>${item.quantity}</td>
-              <td>${formatCurrency(item.unitPrice)}</td>
-              <td>${formatCurrency(item.total)}</td>
+              <td class="muted cell-wrap" data-label="Time">${formatTime(item.timestamp)}</td>
+              <td data-label="Type">${typeBadge}</td>
+              <td class="cell-wrap" data-label="Fragrance">${escapeHtml(item.perfumeName)} <span class="muted">(${escapeHtml(item.brand)})</span></td>
+              <td data-label="Qty">${item.quantity}</td>
+              <td data-label="Unit">${formatCurrency(item.unitPrice)}</td>
+              <td data-label="Total">${formatCurrency(item.total)}</td>
             </tr>
           `;
         }).join("");
